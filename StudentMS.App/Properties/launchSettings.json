@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "StudentMS.App": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\MSI-KATANA#\\Downloads\\SchuelerListe.CSV\""
+    }
+  }
+}
