@@ -1,0 +1,32 @@
+SITUATION:
+
+Sie erhalten von einer Firma den Auftrag ein Programm zu entwickeln, mit dem es möglich ist, Schülerlisten anhand
+eines CSV-Files zu importieren und als Objekte in ein XML- oder JSON-File abzuspeichern. Dieses Programm wird
+anschließend vom Kunden in dessen Software eingebunden.
+
+Die Kundschaft übergibt Ihnen ein CSV-File das Schülereinträge beinhaltet und erteilt Ihnen folgende Vorgaben, nach
+denen die Software programmiert werden soll:
+
+• Programmentwicklung in C# .NET-Framework
+
+• Es soll eine statische, asynchrone und generische Library erstellt werden, die es ermöglicht:
+	o CSV Dateien in ein Objekt (Liste<T>) einzulesen
+	o XML Dateien in ein Objekt (Liste<T>) einzulesen und dieses Objekt als XML zu speichern
+	o Json Dateien in ein Objekt (Liste<T>) einzulesen und dieses Objekt als Json Datei zu speichern
+
+• Die Liste soll Elemente vom Typ „Schueler“ laut csv Datei haben. Dieser Schueler wird um ein Attribut
+„Email“ erweitert (das Standardmäßig null enthält). Dieses Objekt (Model) kommt in eine eigene Library.
+
+• Ist die Liste gefüllt, soll für jeden Schüler eine einmalige Emailadresse aus Vor- und Nachnamen generiert
+werden.
+
+• Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler
+in Klassen) -> Berechnung über Linq.
+
+ZIEL:
+• Entwicklung des Programmes mit Rücksicht auf die Regeln der objektorientierten Programmierung
+• Trennung von Business Layer, Datenmodellen und Presentation Layer
+
+ABZUGEBEN:
+1. Sourcecode (gesamte Solution gezippt)
+2. Programmdokumentation

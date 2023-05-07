@@ -27,7 +27,7 @@ namespace StudentMS.IO
                     }
                 }
             }
-            SetUniqueMail(students);
+             students.GenerateUniqueMail("tsn.at");
 
             return students;
         }
@@ -37,60 +37,90 @@ namespace StudentMS.IO
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="subjects"></param>
-        /// <returns>true if duplicates are existent</returns>
-        private static bool HasDuplicates<T>(this IEnumerable<T> subjects)
+        /// <returns>true if   duplicates are existent</returns>
+        private static bool HasDuplicates<T>(this IEnumerable<T> subjects, out int[]? indexOfDuplicates)
         {
-            return HasDuplicates(subjects, EqualityComparer<T>.Default);
+            return HasDuplicates(subjects, EqualityComparer<T>.Default, out indexOfDuplicates);
         }
-
+        
         /// <summary>
         /// Checks for duplicate entries using a custom <code>IEqualityComparer<typeparamref name="T"/>></code>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="subjects"></param>
         /// <param name="comparer"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        private static bool HasDuplicates<T>(this IEnumerable<T> subjects, IEqualityComparer<T> comparer)
+        /// <param name="indexOfDuplicates"></param>
+        /// <returns>true if List has duplicates in the columns FirstName and LastName as well as an Array of indexes</returns>
+        private static bool HasDuplicates<T>(this IEnumerable<T> subjects, IEqualityComparer<T> comparer, out int[]? indexOfDuplicates)
         {
             if (subjects == null)
-                throw new ArgumentNullException("subjects");
-
+                throw new ArgumentNullException(nameof(subjects));
             if (comparer == null)
-                throw new ArgumentNullException("comparer");
+                throw new ArgumentNullException(nameof(comparer));
 
             var set = new HashSet<T>(comparer);
-
+            var indexList = new List<int>();
+            var i = 0;
             foreach (var s in subjects)
-                if (!set.Add(s))
-                    return true;
-
-            return false;
-        }
-        /// <summary>
-        /// decides for a Email Adress Pattern, default {FirstName}.{LastName}@{Url}
-        /// </summary>
-        /// <param name="students"></param>
-        private static void SetUniqueMail(List<Student> students)
-        {
-            if (students.HasDuplicates())
             {
-                //TODO: Pattern for setting uniqueMails 
-                foreach (var student in students)
+                if (!set.Add(s))
                 {
-                    
+                    indexList.Add(i);
                 }
+                i++;
+            }
+
+            if (indexList.Count > 0)
+            {
+                indexOfDuplicates = indexList.ToArray();
+                return true;
             }
             else
             {
-                foreach(var student in students)
+                indexOfDuplicates = null;
+                return false;
+            }
+        }
+
+        //TODO: difficult to unit test
+        /// <summary>
+        /// Generates unique mail adresses
+        /// </summary>
+        /// <param name="students"></param>
+        /// 
+        public static void GenerateUniqueMail(this List<Student> students, string domain)
+        {
+            foreach (var student in students)
+            {
+                student.Email = $"{student.FirstName.ToLower().ReplaceUmlauts()}.{student.LastName.ToLower().ReplaceUmlauts()}@{domain}";
+            }
+
+            //Custom comparer class
+            StudentComparer comparer = new();
+            int[]? duplicateIndex;
+           
+            if(students.HasDuplicates(comparer, out duplicateIndex))
+            {
+                for (int i = 0; i < duplicateIndex.Length; i++)
                 {
-                    
+                    var duplicate = students.ElementAt(duplicateIndex[i]);
+                    duplicate.Email = $"{duplicate.FirstName.ToLower().ReplaceUmlauts()}.{duplicate.LastName.ToLower().ReplaceUmlauts()}{i}@{domain}";
                 }
             }
-            
             //TODO: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
             //TODO: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
+        }
+
+        /// <summary>
+        /// Does what it says
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static string ReplaceUmlauts(this string value)
+        {
+           return value.Replace("ä", "ae")
+                       .Replace("ö", "oe")
+                       .Replace("ü", "ue");
         }
     }
 }

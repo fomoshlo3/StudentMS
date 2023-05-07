@@ -17,7 +17,7 @@ internal class Program
 
         foreach (var student in students)
         {
-            Console.WriteLine($"{student.FirstName} {student.LastName}\t{student.Grade}\t{student.FirstName}.{student.LastName}@tsn.at");
+            Console.WriteLine(student.ToString());
         }
 
         //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler

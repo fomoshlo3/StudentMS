@@ -2,7 +2,7 @@
   "profiles": {
     "StudentMS.App": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\MSI-KATANA#\\Downloads\\SchuelerListe.CSV\""
+      "commandLineArgs": "\"C:\\Users\\MSI-KATANA#\\OneDrive\\Dokumente\\ApplikationsEntwickler Coding\\Ausbildung Applikationsentwicklung - Coding_Lehrjahr (3)\\ITL_03\\Übung01_StudentMS\\SchuelerListe.CSV\""
     }
   }
 }

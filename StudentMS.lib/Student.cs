@@ -1,18 +1,17 @@
-﻿using System.Collections;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace StudentMS.Models
 {
     /// <summary>
     /// Entity Class
     /// </summary>
-    //TODO: Implement IComparer, EqualityComparer or something else to only check for duplicate email-urls
     public class Student
 
     {
         public string? Grade { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? email { get; set; } 
+        public string? Email { get; set; } = null;
 
         public Student() { }
 
@@ -21,7 +20,46 @@ namespace StudentMS.Models
             Grade = grade;
             FirstName = firstName;
             LastName = lastName;
-            email = null;
+        }
+
+        public override string ToString()
+        {
+            if(Email != null)
+                return $"{FirstName} {LastName} (Klasse {Grade}) Email: {Email}";
+            return  $"{FirstName} {LastName} (Klasse {Grade})";
+        }
+    }
+
+    /// <summary>
+    /// Compares the Student Entries just for First/LastName and email
+    /// </summary>
+    public class StudentComparer : IEqualityComparer<Student>
+    {
+        public bool Equals(Student? x, Student? y)
+        {
+            if (x == null && y == null) return true;
+            if (x == null || y == null) return false;
+            if (x.FirstName == y.FirstName && x.LastName == y.LastName && x.Email == y.Email) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Provides conditional Hashing of FirstName/LastName/Email
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int GetHashCode([DisallowNull] Student obj)
+        {
+            string code;
+            if (obj.Email != null)
+            {
+                code = $"{obj.Email}";
+            }
+            else
+            {
+                code = $"{obj.FirstName},{obj.LastName}";
+            }
+            return code.GetHashCode();
         }
     }
 }
