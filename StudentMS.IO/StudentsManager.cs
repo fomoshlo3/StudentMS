@@ -8,28 +8,10 @@ namespace StudentMS.IO
     /// </summary>
     public static class StudentsManager
     {
-        public static List<Student> GetStudents(FileStream fs)
-        {
-            var students = new List<Student>();
-
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            using (var sr = new StreamReader(fs, Encoding.GetEncoding(1252), true))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (!line.Contains("Vorname"))
-                    {
-                        var objects = line.Split(";");
-                        students.Add(new Student(
-                            objects[0], objects[1], objects[2]));
-                    }
-                }
-            }
-             students.GenerateUniqueMail("tsn.at");
-
-            return students;
+        public static List<Student> ShowStudentsWithMail(List<Student> students, string? domain)
+        {    
+             students.GenerateUniqueMail(domain);
+             return students;
         }
 
         /// <summary>
@@ -44,7 +26,7 @@ namespace StudentMS.IO
         }
         
         /// <summary>
-        /// Checks for duplicate entries using a custom <code>IEqualityComparer<typeparamref name="T"/>></code>
+        /// Checks for duplicate entries using a custom <code>IEqualityComparer</code>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="subjects"></param>

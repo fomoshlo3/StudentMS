@@ -22,11 +22,6 @@ internal class Program
 
         //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler
         //in Klassen).
-        
-
-
-        
         Console.ReadKey();
-
     }
 }
