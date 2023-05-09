@@ -1,0 +1,200 @@
+﻿{
+  "Version": 1,
+  "Properties": {
+    "AreNodeDescriptionsVisible": "True"
+  },
+  "Nodes": [
+    {
+      "Id": "2",
+      "Name": "ImporterExporter",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2023-05-09T13:16:08.4998009Z",
+      "AbsoluteTopLeft": "-45.4623,-33.7646",
+      "HeaderContentSize": "109.39,52",
+      "NodeTotalSize": "231.8667,75",
+      "ChildrenAreaTopLeft": "1,52",
+      "ChildrenAreaSize": "229.8667,22",
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "ImporterExporter",
+        "FullName": "class StudentMS.IO.ImporterExporter",
+        "Symbols": [
+          "StudentMS.IO.ImporterExporter"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "4",
+      "Name": "StudentsManager",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2023-05-09T13:16:21.6785658Z",
+      "AbsoluteTopLeft": "94.6292,91.2354",
+      "HeaderContentSize": "109.8467,63.4",
+      "NodeTotalSize": "328.1133,152.4",
+      "ChildrenAreaTopLeft": "1,63.4",
+      "ChildrenAreaSize": "326.1133,88",
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "StudentsManager",
+        "FullName": "class StudentMS.IO.StudentsManager",
+        "Symbols": [
+          "StudentMS.IO.StudentsManager"
+        ],
+        "Description": "BusinessLogic Class",
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "8",
+      "Name": "Student",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2023-05-09T13:17:14.1777997Z",
+      "AbsoluteTopLeft": "337.1941,293.6354",
+      "HeaderContentSize": "102,63.4",
+      "NodeTotalSize": "102,63.4",
+      "ChildrenAreaTopLeft": "1,0",
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "Student",
+        "FullName": "class StudentMS.Models.Student",
+        "Symbols": [
+          "StudentMS.Models.Student"
+        ],
+        "Description": "Entity Class",
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "1",
+      "ParentId": "2",
+      "Name": "List<Student> ImportCSV(string fqpn)",
+      "Stereotype": "Method",
+      "CreatedAtUtc": "2023-05-09T13:16:08.3982792Z",
+      "AbsoluteTopLeft": "-44.4623,18.2354",
+      "RelativeTopLeft": "0,0",
+      "HeaderContentSize": "229.8667,22",
+      "HeaderMinSize": "229.8667,22",
+      "NodeTotalSize": "229.8667,22",
+      "Payload": {
+        "Discriminator": "RoslynMember",
+        "SymbolName": "ImportCSV",
+        "FullName": "public static List<Student> ImportCSV(string fqpn)",
+        "Symbols": [
+          "StudentMS.IO.ImporterExporter.ImportCSV(System.String)"
+        ],
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "3",
+      "ParentId": "4",
+      "Name": "List<Student> ShowStudentsWithMail(List<Student> students, string? domain)",
+      "Stereotype": "Method",
+      "CreatedAtUtc": "2023-05-09T13:16:21.6775713Z",
+      "AbsoluteTopLeft": "95.6292,220.6354",
+      "RelativeTopLeft": "0,66",
+      "HeaderContentSize": "326.1133,22",
+      "HeaderMinSize": "326.1133,22",
+      "NodeTotalSize": "326.1133,22",
+      "Payload": {
+        "Discriminator": "RoslynMember",
+        "SymbolName": "ShowStudentsWithMail",
+        "FullName": "public static List<Student> ShowStudentsWithMail(List<Student> students, string? domain)",
+        "Symbols": [
+          "StudentMS.IO.StudentsManager.ShowStudentsWithMail(System.Collections.Generic.List<StudentMS.Models.Student>, System.String)"
+        ],
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "5",
+      "ParentId": "4",
+      "Name": "bool HasDuplicates<T>(IEnumerable<T> subjects, IEqualityComparer<T> comparer, out int[]? indexOfDuplicates)",
+      "Stereotype": "Method",
+      "CreatedAtUtc": "2023-05-09T13:16:34.7188681Z",
+      "AbsoluteTopLeft": "95.6292,198.6354",
+      "RelativeTopLeft": "0,44",
+      "HeaderContentSize": "323.31,22",
+      "HeaderMinSize": "326.1133,22",
+      "NodeTotalSize": "326.1133,22",
+      "Payload": {
+        "Discriminator": "RoslynMember",
+        "SymbolName": "HasDuplicates",
+        "FullName": "private static bool HasDuplicates<T>(this IEnumerable<T> subjects, IEqualityComparer<T> comparer, out int[]? indexOfDuplicates)",
+        "Symbols": [
+          "StudentMS.IO.StudentsManager.HasDuplicates<T>(System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IEqualityComparer<T>, out System.Int32[])"
+        ],
+        "Description": "Checks for duplicate entries using a custom IEqualityComparer",
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Private",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "6",
+      "ParentId": "4",
+      "Name": "void GenerateUniqueMail(List<Student> students, string domain)",
+      "Stereotype": "Method",
+      "CreatedAtUtc": "2023-05-09T13:16:40.2082683Z",
+      "AbsoluteTopLeft": "95.6292,154.6354",
+      "RelativeTopLeft": "0,0",
+      "HeaderContentSize": "322.2567,22",
+      "HeaderMinSize": "326.1133,22",
+      "NodeTotalSize": "326.1133,22",
+      "Payload": {
+        "Discriminator": "RoslynMember",
+        "SymbolName": "GenerateUniqueMail",
+        "FullName": "public static void GenerateUniqueMail(this List<Student> students, string domain)",
+        "Symbols": [
+          "StudentMS.IO.StudentsManager.GenerateUniqueMail(System.Collections.Generic.List<StudentMS.Models.Student>, System.String)"
+        ],
+        "Description": "Generates unique mail adresses",
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "7",
+      "ParentId": "4",
+      "Name": "string GetCleanString(string value)",
+      "Stereotype": "Method",
+      "CreatedAtUtc": "2023-05-09T13:16:46.3746457Z",
+      "AbsoluteTopLeft": "95.6292,176.6354",
+      "RelativeTopLeft": "0,22",
+      "HeaderContentSize": "209.91,22",
+      "HeaderMinSize": "326.1133,22",
+      "NodeTotalSize": "326.1133,22",
+      "Payload": {
+        "Discriminator": "RoslynMember",
+        "SymbolName": "GetCleanString",
+        "FullName": "private static string GetCleanString(this string value)",
+        "Symbols": [
+          "StudentMS.IO.StudentsManager.GetCleanString(System.String)"
+        ],
+        "Description": "Does what it says",
+        "IsDescriptionVisible": true,
+        "IsStatic": true,
+        "Accessibility": "Private",
+        "Origin": "SourceCode"
+      }
+    }
+  ],
+  "Connectors": []
+}

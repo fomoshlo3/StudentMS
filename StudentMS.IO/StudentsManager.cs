@@ -1,5 +1,6 @@
 ﻿using StudentMS.Models;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace StudentMS.IO
 {
@@ -8,11 +9,38 @@ namespace StudentMS.IO
     /// </summary>
     public static class StudentsManager
     {
-        public static List<Student> ShowStudentsWithMail(List<Student> students, string? domain)
-        {    
-             students.GenerateUniqueMail(domain);
-             return students;
+        
+        //TODO: difficult to unit test
+        /// <summary>
+        /// Generates a unique Mail in format <code>"john.doe@<paramref name="domain"/>"</code>
+        /// Implements a check for duplicates & a string cleaner.
+        /// </summary>
+        /// <param name="students"></param>
+        /// <param name="domain"></param>
+        public static void GenerateUniqueMail(List<Student> students, string domain)
+        {
+            foreach (var student in students)
+            {
+                if(student.FirstName != null && student.LastName != null)
+                student.Email = $"{student.FirstName.GetCleanString()}.{student.LastName.GetCleanString()}@{domain}";
+            }
+
+            //Custom comparer class
+            StudentComparer comparer = new();
+            int[]? duplicateIndex;
+
+            if (students.HasDuplicates(comparer, out duplicateIndex))
+            {
+                for (int i = 0; i < duplicateIndex.Length; i++)
+                {
+                    var duplicate = students.ElementAt(duplicateIndex[i]);
+                    duplicate.Email = $"{duplicate.FirstName.GetCleanString()}.{duplicate.LastName.GetCleanString()}{i}@{domain}";
+                }
+            }
+            //TODO: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
+            //TODO: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
         }
+
 
         /// <summary>
         /// Checks for duplicate entries using the Default EqualityComparer
@@ -64,45 +92,22 @@ namespace StudentMS.IO
             }
         }
 
-        //TODO: difficult to unit test
-        /// <summary>
-        /// Generates unique mail adresses
-        /// </summary>
-        /// <param name="students"></param>
-        /// 
-        public static void GenerateUniqueMail(this List<Student> students, string domain)
-        {
-            foreach (var student in students)
-            {
-                student.Email = $"{student.FirstName.ToLower().ReplaceUmlauts()}.{student.LastName.ToLower().ReplaceUmlauts()}@{domain}";
-            }
-
-            //Custom comparer class
-            StudentComparer comparer = new();
-            int[]? duplicateIndex;
-           
-            if(students.HasDuplicates(comparer, out duplicateIndex))
-            {
-                for (int i = 0; i < duplicateIndex.Length; i++)
-                {
-                    var duplicate = students.ElementAt(duplicateIndex[i]);
-                    duplicate.Email = $"{duplicate.FirstName.ToLower().ReplaceUmlauts()}.{duplicate.LastName.ToLower().ReplaceUmlauts()}{i}@{domain}";
-                }
-            }
-            //TODO: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
-            //TODO: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
-        }
+        
 
         /// <summary>
         /// Does what it says
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static string ReplaceUmlauts(this string value)
+        private static string GetCleanString(this string value)
         {
-           return value.Replace("ä", "ae")
-                       .Replace("ö", "oe")
-                       .Replace("ü", "ue");
+            //TODO: regex produces cleaner string
+            Regex cleanStr = new(@"(\b\w+\b)");  //Since .Match() returns only first match this is effective enough
+
+            return cleanStr.Match(value).Value.ToLower()
+                                              .Replace("ä", "ae")
+                                              .Replace("ö", "oe")
+                                              .Replace("ü", "ue");
         }
     }
 }

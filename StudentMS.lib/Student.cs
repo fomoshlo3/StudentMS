@@ -22,11 +22,19 @@ namespace StudentMS.Models
             LastName = lastName;
         }
 
+        public Student(string grade, string lastName, string firstName, string email)
+        {
+            Grade = grade;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+        }
+
         public override string ToString()
         {
-            if(Email != null)
-                return $"{FirstName} {LastName} (Klasse {Grade}) Email: {Email}";
-            return  $"{FirstName} {LastName} (Klasse {Grade})";
+            if (Email != null)
+                return $"{FirstName} {LastName} (Klasse: {Grade}) Email: {Email}";
+            return $"{FirstName} {LastName} (Klasse: {Grade})";
         }
     }
 
