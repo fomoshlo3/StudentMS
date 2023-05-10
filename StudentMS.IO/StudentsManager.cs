@@ -1,5 +1,4 @@
 ﻿using StudentMS.Models;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace StudentMS.IO
@@ -9,7 +8,7 @@ namespace StudentMS.IO
     /// </summary>
     public static class StudentsManager
     {
-        
+
         //TODO: difficult to unit test
         /// <summary>
         /// Generates a unique Mail in format <code>"john.doe@<paramref name="domain"/>"</code>
@@ -21,8 +20,8 @@ namespace StudentMS.IO
         {
             foreach (var student in students)
             {
-                if(student.FirstName != null && student.LastName != null)
-                student.Email = $"{student.FirstName.GetCleanString()}.{student.LastName.GetCleanString()}@{domain}";
+                if (student.FirstName != null && student.LastName != null)
+                    student.Email = $"{student.FirstName.GetCleanString()}.{student.LastName.GetCleanString()}@{domain}";
             }
 
             //Custom comparer class
@@ -41,18 +40,6 @@ namespace StudentMS.IO
             //TODO: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
         }
 
-
-        /// <summary>
-        /// Checks for duplicate entries using the Default EqualityComparer
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="subjects"></param>
-        /// <returns>true if   duplicates are existent</returns>
-        private static bool HasDuplicates<T>(this IEnumerable<T> subjects, out int[]? indexOfDuplicates)
-        {
-            return HasDuplicates(subjects, EqualityComparer<T>.Default, out indexOfDuplicates);
-        }
-        
         /// <summary>
         /// Checks for duplicate entries using a custom <code>IEqualityComparer</code>
         /// </summary>
@@ -92,7 +79,7 @@ namespace StudentMS.IO
             }
         }
 
-        
+
 
         /// <summary>
         /// Does what it says
