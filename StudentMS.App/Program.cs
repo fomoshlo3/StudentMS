@@ -4,22 +4,23 @@ using StudentMS.Models;
 
 internal class Program
 {
-    //Since the Task was to code a async Library, and not a async GUI no async identifier on my Main()
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        //Console.WriteLine("Hello Please give me a full path to the CSV you would like to load");
         string? input = null;
         if (input == null)
         {
             input = args[0];
         }
-        List<Student> students = new();
-        //decision logic for ImporterExporter
+        //---------
+        string? directory = Path.GetDirectoryName(input);
         var ext = new FileInfo(input).Extension;
-        Console.WriteLine(ext);
-        if (ext == ".CSV") students = ImporterExporter.ImportCSV_Async(input).Result;
-        //if (ext == ".xml")  Import xml
-        //if (ext == ".json") Import json
+        //---------
+        List<Student> students = new();
+
+        //decision logic for ImporterExporter
+        if (ext == ".CSV") students = await ImporterExporter.ImportCSV_Async(input);
+        //TODO: if (ext == ".xml") students = await ImporterExporter.ImportXml_Async(input);
+        //TODO: if (ext == ".json") students = await ImporterExporter.ImportJson_Async(input);
 
         StudentsManager.GenerateUniqueMail(students, "tsn.at");
 
@@ -27,28 +28,15 @@ internal class Program
         {
             Console.WriteLine(student.ToString());
         }
-
-
-        var menu = () =>
+        if (Path.Exists(directory))
         {
-            string output = "Do you want to save to CSV? \n [Y/N]";
-
-            Console.WriteLine(Environment.NewLine + output);
-            string? answer = Console.ReadLine();
-
-            switch (answer)
-            {
-                case "Y": ExportCSV_Async(,students) break;
-                case "N": Environment.Exit(1); break;
-                default: Console.WriteLine(); break;
-            }
-        };
-        while(Environment.ExitCode != 1)
-        {
-            menu();
+            await ImporterExporter.ExportCSV_Async(Path.Combine(directory, "test.CSV"), students);
+            await ImporterExporter.ExportToXml_Async(Path.Combine(directory, "test.xml"), students);
         }
-        //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler
-        //in Klassen).
+        
+
+        //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler in Klassen).
+
         Console.ReadKey();
 
     }

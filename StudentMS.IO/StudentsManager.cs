@@ -8,7 +8,6 @@ namespace StudentMS.IO
     /// </summary>
     public static class StudentsManager
     {
-
         //TODO: difficult to unit test
         /// <summary>
         /// Generates a unique Mail in format <code>"john.doe@<paramref name="domain"/>"</code>
@@ -18,6 +17,7 @@ namespace StudentMS.IO
         /// <param name="domain"></param>
         public static void GenerateUniqueMail(List<Student> students, string domain)
         {
+            //Task führt nur aus wenn es IO blockiert.
             foreach (var student in students)
             {
                 if (student.FirstName != null && student.LastName != null)
@@ -33,7 +33,7 @@ namespace StudentMS.IO
                 for (int i = 0; i < duplicateIndex.Length; i++)
                 {
                     var duplicate = students.ElementAt(duplicateIndex[i]);
-                    duplicate.Email = $"{duplicate.FirstName.GetCleanString()}.{duplicate.LastName.GetCleanString()}{i}@{domain}";
+                    duplicate.Email =  $"{duplicate.FirstName?.GetCleanString()}.{duplicate.LastName?.GetCleanString()}{i}@{domain}";
                 }
             }
             //TODO: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
@@ -79,8 +79,6 @@ namespace StudentMS.IO
             }
         }
 
-
-
         /// <summary>
         /// Does what it says
         /// </summary>
@@ -91,7 +89,7 @@ namespace StudentMS.IO
             //TODO: regex produces cleaner string
             Regex cleanStr = new(@"(\b\w+\b)");  //Since .Match() returns only first match this is effective enough
 
-            return cleanStr.Match(value).Value.ToLower()
+            return cleanStr.Match(value).Value.ToLower(System.Globalization.CultureInfo.CurrentCulture)
                                               .Replace("ä", "ae")
                                               .Replace("ö", "oe")
                                               .Replace("ü", "ue");
