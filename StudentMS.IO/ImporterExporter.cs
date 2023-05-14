@@ -46,7 +46,7 @@ namespace StudentMS.IO
                 FileStream fs = File.Create(fqpn);
                 using (var sr = new StreamWriter(fs, Encoding.GetEncoding(1252)))
                 {
-                    await sr.WriteLineAsync("Klasse;Vorname;Name;Email");
+                    await sr.WriteLineAsync("Klasse;Vorname(-2.Vorname);Nachame;Email");
                     foreach (var item in dataList)
                     {
                         await sr.WriteLineAsync($"{item.Grade};{item.FirstName};{item.LastName};{item.Email}");
@@ -97,7 +97,7 @@ namespace StudentMS.IO
                     await writer.WriteCDataAsync("cdata value");
                     await writer.WriteEndElementAsync();
                     await writer.FlushAsync();
-                    writer.WriteRaw("test");
+                    
                     //await writer.WriteStartDocumentAsync();
                     //await writer.XmlSpace  
                     //await writer.WriteStartElementAsync("student");
