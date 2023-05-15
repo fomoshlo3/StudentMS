@@ -25,9 +25,9 @@ namespace StudentMS.IO
                 {
                     if (!line.Contains("Vorname"))
                     {
-                        var objects = line.Split(";");
+                        var subjects = line.Split(";");
                         students.Add(new Student(
-                            objects[0], objects[1], objects[2]));
+                            subjects[0], subjects[1], subjects[2]));
                     }
                 }
             }
@@ -49,7 +49,7 @@ namespace StudentMS.IO
                     await sr.WriteLineAsync("Klasse;Vorname(-2.Vorname);Nachame;Email");
                     foreach (var item in dataList)
                     {
-                        await sr.WriteLineAsync($"{item.Grade};{item.FirstName};{item.LastName};{item.Email}");
+                        await sr.WriteLineAsync($"{item.Class};{item.FirstName};{item.LastName};{item.Email}");
                     }
                     sr.Close();
                 }

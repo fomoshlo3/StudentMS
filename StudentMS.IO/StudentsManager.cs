@@ -8,7 +8,6 @@ namespace StudentMS.IO
     /// </summary>
     public static class StudentsManager
     {
-        //TODO: difficult to unit test
         /// <summary>
         /// Generates a unique Mail in format <code>"john.doe@<paramref name="domain"/>"</code>
         /// Implements a check for duplicates & a string cleaner.
@@ -30,14 +29,14 @@ namespace StudentMS.IO
 
             if (students.HasDuplicates(comparer, out duplicateIndex))
             {
-                for (int i = 0; i < duplicateIndex.Length; i++)
+                for (int i = 0; i < duplicateIndex?.Length; i++)
                 {
                     var duplicate = students.ElementAt(duplicateIndex[i]);
                     duplicate.Email =  $"{duplicate.FirstName?.GetCleanString()}.{duplicate.LastName?.GetCleanString()}{i}@{domain}";
                 }
             }
-            //TODO: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
-            //TODO: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
+            //NOTE: https://www.geekality.net/2010/01/19/how-to-check-for-duplicates/
+            //NOTE: https://dirask.com/posts/C-NET-remove-duplicates-from-List-using-HashSet-D9zB8p
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace StudentMS.IO
         /// <returns></returns>
         private static string GetCleanString(this string value)
         {
-            //TODO: regex produces cleaner string
+            //TODO: unit test
             Regex cleanStr = new(@"(\b\w+\b)");  //Since .Match() returns only first match this is effective enough
 
             return cleanStr.Match(value).Value.ToLower(System.Globalization.CultureInfo.CurrentCulture)

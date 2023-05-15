@@ -9,23 +9,23 @@ namespace StudentMS.Models
 
     {
         //public int Id { get; set; }
-        public string? Grade { get; set; }
+        public string? Class { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; } = null;
 
         public Student() { }
 
-        public Student(string grade, string lastName, string firstName)
+        public Student(string @class, string lastName, string firstName)
         {
-            Grade = grade;
+            Class = @class;
             FirstName = firstName;
             LastName = lastName;
         }
 
         public Student(string grade, string lastName, string firstName, string email)
         {
-            Grade = grade;
+            Class = grade;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -34,8 +34,8 @@ namespace StudentMS.Models
         public override string ToString()
         {
             if (Email != null)
-                return $"{FirstName} {LastName} (Klasse: {Grade}) Email: {Email}";
-            return $"{FirstName} {LastName} (Klasse: {Grade})";
+                return $"{FirstName} {LastName} (Klasse: {Class}) Email: {Email}";
+            return $"{FirstName} {LastName} (Klasse: {Class})";
         }
     }
 

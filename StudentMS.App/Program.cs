@@ -28,16 +28,52 @@ internal class Program
         {
             Console.WriteLine(student.ToString());
         }
+
+        //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler in Klassen).
+        Console.WriteLine($"{students.Count} Schüler");
+        Console.WriteLine(students.DistinctBy(s => s.Class).Count() + " Klassen");
+        PrintStudentsPerClass(students);
+        PrintAverageCount(students);
+
+
+        Console.ReadKey();
+
         if (Path.Exists(directory))
         {
             await ImporterExporter.ExportCSV_Async(Path.Combine(directory, "test.CSV"), students);
             await ImporterExporter.ExportToXml_Async(Path.Combine(directory, "test.xml"), students);
         }
-        
-
-        //TODO:Anzeigen einer Kurzstatistik (Anzahl d. Schüler bzw. Klassen, Anzahl Schüler pro Klasse, Durchschnitt Schüler in Klassen).
 
         Console.ReadKey();
 
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="students"></param>
+    /// <param name="option"></param>
+    public static void PrintStudentsPerClass(List<Student> students)
+    {
+        var gradeCounts = from s in students
+                          group s by s.Class into g
+                          select (Class: g.Key, ClassCount: g.Count());
+
+                foreach (var g in gradeCounts)
+                {
+                    Console.WriteLine($"Klasse: {g.Class}: Schüler: {g.ClassCount}");
+                }
+    }
+
+    public static void PrintAverageCount(List<Student> students)
+    {
+        // Wiederhole mich hier , da ich nicht wirklich 
+        var classCount = from s in students
+                         group s by s.Class into g
+                         select (Class: g.Key, ClassCount: g.Count());
+
+   
+        Console.WriteLine($"Durchschnittliche Klassengröße: {classCount.Average(i => i.ClassCount)}");
+    }
+
 }
