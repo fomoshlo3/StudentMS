@@ -12,6 +12,7 @@ internal class Program
             input = args[0];
         }
         //---------
+        //TODO: Dynamic Relative generation of Paths. for adjustments see StudentMs.App/Properties/launchsettings.json
         string? directory = Path.GetDirectoryName(input);
         var ext = new FileInfo(input).Extension;
         //---------
@@ -41,18 +42,13 @@ internal class Program
         if (Path.Exists(directory))
         {
             await ImporterExporter.ExportCSV_Async(Path.Combine(directory, "test.CSV"), students);
-            await ImporterExporter.ExportToXml_Async(Path.Combine(directory, "test.xml"), students);
+            //await ImporterExporter.ExportToXml_Async(Path.Combine(directory, "test.xml"), students);
         }
 
         Console.ReadKey();
 
     }
     
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="students"></param>
-    /// <param name="option"></param>
     public static void PrintStudentsPerClass(List<Student> students)
     {
         var gradeCounts = from s in students
@@ -67,7 +63,6 @@ internal class Program
 
     public static void PrintAverageCount(List<Student> students)
     {
-        // Wiederhole mich hier , da ich nicht wirklich 
         var classCount = from s in students
                          group s by s.Class into g
                          select (Class: g.Key, ClassCount: g.Count());
